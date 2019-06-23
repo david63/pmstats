@@ -1,0 +1,78 @@
+{% include '@' ~ NAMESPACE ~ '/head_panel.html' %}
+
+<form id="list" method="post" action="{{ U_ACTION }}">
+
+	<div class="head-panel">
+		<div class="pagination">
+			{% if pagination or MSG_COUNT %}
+					{{ MESSAGE_COUNT }}
+				{% if pagination %}
+					&bull; {% include 'pagination.html' %}
+				{% else %}
+					&bull; {{ PAGE_NUMBER }}
+				{% endif %}
+			{% endif %}
+		</div>
+
+		<div class="select-buttons">
+			<strong>{{ lang('SORT_BY') }}&nbsp;{{ lang('COLON') }}</strong>&nbsp;{{ S_SORT_KEY }}&nbsp;&nbsp;{{ S_SORT_DIR }}
+			&nbsp;&bull;&nbsp;
+			<strong>{{ lang('FILTER_BY') }}&nbsp;{{ lang('COLON') }}</strong>&nbsp;{{ S_FILTER_BY }}&nbsp;{{ S_FILTER_CHAR }}
+			<br><br>
+			<input class="adm-button" type="submit" value="{{ lang('GO') }}" name="sort" />
+			&nbsp;&nbsp;&nbsp;
+			<input class="adm-button" type="submit" value="{{ lang('CLEAR_FILTER') }}" name="clear_filters" />
+		</div>
+	</div>
+
+	<div class="table">
+		<div class="table-header">
+			<div class="table-header-cell-left">{{ lang('USERNAME') }}</div>
+			<div class="table-header-cell">{{ lang('PM_INBOX') }}</div>
+			<div class="table-header-cell">{{ lang('PM_NEW') }}</div>
+			<div class="table-header-cell">{{ lang('PM_UNREAD') }}</div>
+			<div class="table-header-cell">{{ lang('PM_OUTBOX') }}</div>
+			<div class="table-header-cell">{{ lang('PM_SENTBOX') }}</div>
+			<div class="table-header-cell">{{ lang('PM_SAVED') }}</div>
+			<div class="table-header-cell">{{ lang('PM_HOLDBOX') }}</div>
+			<div class="table-header-cell">{{ lang('PM_DELETED') }}</div>
+			<div class="table-header-cell">{{ lang('PM_MARKED') }}</div>
+			<div class="table-header-cell">{{ lang('PM_REPLIED') }}</div>
+			<div class="table-header-cell">{{ lang('PM_FORWARDED') }}</div>
+			<div class="table-header-cell">{{ lang('PM_NOBOX') }}</div>
+			<div class="table-header-cell-right">{{ lang('PM_TOTAL') }}</div>
+		</div>
+
+		<div class="table-body">
+			{% for pm in pm_statistics %}
+				{% if pm.S_ROW_COUNT is even %}<div class="table-row1">{% else %}<div class="table-row2">{% endif %}
+					<div class="table-body-cell-right">{{ pm.USERNAME }}</div>
+					<div class="table-body-cell-right">{{ pm.INBOX }}</div>
+					<div class="table-body-cell-right">{{ pm.NEW }}</div>
+				   	<div class="table-body-cell-right">{{ pm.UNREAD }}</div>
+					<div class="table-body-cell-right">{{ pm.OUTBOX }}</div>
+					<div class="table-body-cell-right">{{ pm.SENTBOX }}</div>
+					<div class="table-body-cell-right">{{ pm.SAVEDBOX }}</div>
+					<div class="table-body-cell-right">{{ pm.HOLDBOX }}</div>
+					<div class="table-body-cell-right">{{ pm.DELETED }}</div>
+					<div class="table-body-cell-right">{{ pm.MARKED }}</div>
+					<div class="table-body-cell-right">{{ pm.REPLIED }}</div>
+					<div class="table-body-cell-right">{{ pm.FORWARDED }}</div>
+					<div class="table-body-cell-right">{{ pm.NOBOX }}</div>
+					<div class="table-body-cell-bold">{{ pm.TOTAL }}</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="pagination">
+		{% if pagination %}
+			{% include 'pagination.html' %}
+		{% else %}
+			&bull; {{ PAGE_NUMBER }}
+		{% endif %}
+	</div>
+
+</form>
+
+{% include '@' ~ NAMESPACE ~ '/donate.html' %}

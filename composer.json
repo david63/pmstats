@@ -1,0 +1,34 @@
+{
+	"name": "david63/pmstats",
+	"type": "phpbb-extension",
+	"description": "Adds an Admin option to display a list of the number of member's PM's in each box.",
+	"version": "2.1.0",
+	"time": "2017-01-07",
+	"keywords": [
+		"phpbb",
+		"extension",
+		"ACP",
+		"email"
+	],
+	"license": "GPL-2.0-only",
+	"authors": [{
+			"name": "David Wood",
+			"homepage": "",
+			"role": "Developer"
+		}],
+	"require": {
+        "php": ">=5.4.0",
+        "composer/installers": "~1.0"
+    },
+	"extra": {
+		"display-name": "[*] PM statistics",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.2.0"
+    	},
+		"version-check": {
+        	"host": "version.phpbbdev.space",
+        	"directory": "/3.2",
+        	"filename": "/pm_stats_version_file.json"
+    	}
+	}
+}
