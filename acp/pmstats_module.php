@@ -29,4 +29,3 @@ class pmstats_module
 		$admin_controller->display_output();
 	}
 }
-

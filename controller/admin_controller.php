@@ -172,7 +172,7 @@ class admin_controller implements admin_interface
 			'SELECT'	=> 'u.user_id, u.username, u.username_clean, u.user_colour, p.pm_deleted, p.pm_new, p.pm_unread, p.pm_replied, p.pm_marked, p.pm_forwarded, SUM(IF(p.folder_id = ' . PRIVMSGS_INBOX . ', 1, 0)) AS inbox, SUM(IF(p.folder_id = ' . PRIVMSGS_SENTBOX . ', 1, 0)) AS sentbox, SUM(IF(p.folder_id = ' . PRIVMSGS_OUTBOX . ', 1, 0)) AS outbox, SUM(IF(p.folder_id = ' . PRIVMSGS_NO_BOX . ', 1, 0)) AS nobox, SUM(IF(p.folder_id = ' . PRIVMSGS_HOLD_BOX . ', 1, 0)) AS holdbox, SUM(IF(p.folder_id > ' . PRIVMSGS_INBOX . ', 1, 0)) AS savedbox, COUNT(p.folder_id) AS total',
 			'FROM'		=> array(
 				USERS_TABLE		=> 'u',
-		   	),
+			),
 			'LEFT_JOIN'	=> array(
 				array(
 					'FROM'	=> array(PRIVMSGS_TO_TABLE => 'p'),
