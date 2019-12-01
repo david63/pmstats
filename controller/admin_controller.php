@@ -107,7 +107,7 @@ class admin_controller implements admin_interface
 
 		// Get message count
 		$sql = 'SELECT COUNT(msg_id) AS total_msg
-			FROM ' . PRIVMSGS_TO_TABLE;
+			FROM ' . $this->tables['privmsgs_to'];
 		$result = $this->db->sql_query($sql);
 
 		$total_msg = (int) $this->db->sql_fetchfield('total_msg');
@@ -171,11 +171,11 @@ class admin_controller implements admin_interface
 		$sql = $this->db->sql_build_query('SELECT', array(
 			'SELECT'	=> 'u.user_id, u.username, u.username_clean, u.user_colour, p.pm_deleted, p.pm_new, p.pm_unread, p.pm_replied, p.pm_marked, p.pm_forwarded, SUM(IF(p.folder_id = ' . PRIVMSGS_INBOX . ', 1, 0)) AS inbox, SUM(IF(p.folder_id = ' . PRIVMSGS_SENTBOX . ', 1, 0)) AS sentbox, SUM(IF(p.folder_id = ' . PRIVMSGS_OUTBOX . ', 1, 0)) AS outbox, SUM(IF(p.folder_id = ' . PRIVMSGS_NO_BOX . ', 1, 0)) AS nobox, SUM(IF(p.folder_id = ' . PRIVMSGS_HOLD_BOX . ', 1, 0)) AS holdbox, SUM(IF(p.folder_id > ' . PRIVMSGS_INBOX . ', 1, 0)) AS savedbox, COUNT(p.folder_id) AS total',
 			'FROM'		=> array(
-				USERS_TABLE		=> 'u',
+			   $this->tables['users']		=> 'u',
 			),
 			'LEFT_JOIN'	=> array(
 				array(
-					'FROM'	=> array(PRIVMSGS_TO_TABLE => 'p'),
+					'FROM'	=> array($this->tables['privmsgs_to'] => 'p'),
 					'ON'	=> 'u.user_id = p.user_id'
 				)
 			),
@@ -214,7 +214,7 @@ class admin_controller implements admin_interface
 
 		// Get total user count for pagination
 		$sql = 'SELECT COUNT(u.user_id) AS total_users
-			FROM ' . USERS_TABLE . ' u
+			FROM ' . $this->tables['users'] . ' u
 			WHERE u.user_type <> ' . USER_IGNORE .
 			$filter_by;
 		$result = $this->db->sql_query($sql);
