@@ -1,6 +1,3 @@
-imports:
-    - { resource: phpbb_tables.yml }
-
 services:
     david63.pmstats.listener:
         class: david63\pmstats\event\listener

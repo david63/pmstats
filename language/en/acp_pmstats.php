@@ -46,8 +46,6 @@ $lang = array_merge($lang, array(
 
 	'MSG_COUNT'						=> 'Message count : <strong>%1$s</strong>',
 
-	'NEW_VERSION'					=> 'New Version',
-	'NEW_VERSION_EXPLAIN'			=> 'There is a newer version of this extension available.',
 	'NO_PM_DATA'					=> 'There is no PM data to display',
 
 	'OTHER'							=> 'Other',
@@ -89,20 +87,8 @@ $lang = array_merge($lang, array(
 	'SORT_UNREAD'					=> 'Unread',
 	'SORT_USERNAME'					=> 'Username',
 
-	'VERSION'						=> 'Version',
-
 	// Translators - set these to whatever is most appropriate in your language
 	// These are used to populate the filter keys
 	'START_CHARACTER'		=> 'A',
 	'END_CHARACTER'			=> 'Z',
-));
-
-// Donate
-$lang = array_merge($lang, array(
-	'DONATE'					=> 'Donate',
-	'DONATE_EXTENSIONS'			=> 'Donate to my extensions',
-	'DONATE_EXTENSIONS_EXPLAIN'	=> 'This extension, as with all of my extensions, is totally free of charge. If you have benefited from using it then please consider making a donation by clicking the PayPal donation button opposite - I would appreciate it. I promise that there will be no spam nor requests for further donations, although they would always be welcome.',
-
-	'PAYPAL_BUTTON'				=> 'Donate with PayPal button',
-	'PAYPAL_TITLE'				=> 'PayPal - The safer, easier way to pay online!',
 ));
