@@ -18,6 +18,7 @@ services:
             - '@language'
             - '@david63.pmstats.core.functions'
             - '%tables%'
+            - '%core.root_path%ext/david63/pmstats/adm/style/images'
 
     david63.pmstats.core.functions:
         class: david63\pmstats\core\functions

@@ -40,7 +40,7 @@ class listener implements EventSubscriberInterface
 	public function add_permission($event)
 	{
 		$permissions 						= $event['permissions'];
-		$permissions['a_comms_pm_stats']	= array('lang' => 'ACL_A_COMMS_PM_STATS', 'cat' => 'misc');
+		$permissions['a_comms_pm_stats']	= array('lang' => 'ACL_A_COMMS_PM_STATS', 'cat' => 'user_group');
 		$event['permissions'] 				= $permissions;
 	}
 }

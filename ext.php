@@ -24,7 +24,7 @@ class ext extends base
 	public function is_enableable()
 	{
 		// Requires phpBB 3.3.0 or newer.
-		$is_enableable = phpbb_version_compare(PHPBB_VERSION, '3.3.0', '>=');
+		$is_enableable = phpbb_version_compare(PHPBB_VERSION, '3.2.0', '>=') && phpbb_version_compare(PHPBB_VERSION, '4.0.0@dev', '<');
 
 		// Display a custom warning message if requirement fails.
 		if (!$is_enableable)

@@ -54,38 +54,43 @@ class admin_controller implements admin_interface
 	/** @var string phpBB tables */
 	protected $tables;
 
+	/** @var string */
+	protected $ext_images_path;
+
 	/** @var string Custom form action */
 	protected $u_action;
 
 	/**
 	* Constructor for admin controller
 	*
-	* @param \phpbb\config\config				$config		Config object
-	* @param \phpbb\db\driver\driver_interface	$db			Database object
-	* @param \phpbb\request\request				$request	Request object
-	* @param \phpbb\template\template			$template	Template object
-	* @param \phpbb\pagination					$pagination	Pagination object
-	* @param \phpbb\user						$user		User object
-	* @param \phpbb\auth\auth 					$auth		Auth object
-	* @param \phpbb\language\language			$language	Language object
-	* @param \david63\pmstats\core\functions	$functions	Functions for the extension
-	* @param array								$tables		phpBB db tables
+	* @param \phpbb\config\config				$config				Config object
+	* @param \phpbb\db\driver\driver_interface	$db					Database object
+	* @param \phpbb\request\request				$request			Request object
+	* @param \phpbb\template\template			$template			Template object
+	* @param \phpbb\pagination					$pagination			Pagination object
+	* @param \phpbb\user						$user				User object
+	* @param \phpbb\auth\auth 					$auth				Auth object
+	* @param \phpbb\language\language			$language			Language object
+	* @param \david63\pmstats\core\functions	$functions			Functions for the extension
+	* @param array								$tables				phpBB db tables
+	* @param string								$ext_images_path	Path to this extension's images
 	*
 	* @return \david63\emaillist\controller\admin_controller
 	* @access public
 	*/
-	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, language $language, functions $functions, $tables)
+	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, language $language, functions $functions, $tables, $ext_images_path)
 	{
-		$this->config		= $config;
-		$this->db  			= $db;
-		$this->request		= $request;
-		$this->template		= $template;
-		$this->pagination	= $pagination;
-		$this->user			= $user;
-		$this->auth			= $auth;
-		$this->language		= $language;
-		$this->functions	= $functions;
-		$this->tables		= $tables;
+		$this->config			= $config;
+		$this->db  				= $db;
+		$this->request			= $request;
+		$this->template			= $template;
+		$this->pagination		= $pagination;
+		$this->user				= $user;
+		$this->auth				= $auth;
+		$this->language			= $language;
+		$this->functions		= $functions;
+		$this->tables			= $tables;
+		$this->ext_images_path	= $ext_images_path;
 	}
 
 	/**
@@ -103,8 +108,7 @@ class admin_controller implements admin_interface
 		}
 
 		// Add the language files
-		$this->language->add_lang('acp_pmstats', $this->functions->get_ext_namespace());
-		$this->language->add_lang('acp_common', $this->functions->get_ext_namespace());
+		$this->language->add_lang(array('acp_pmstats', 'acp_common'), $this->functions->get_ext_namespace());
 
 		// Get message count
 		$sql = 'SELECT COUNT(msg_id) AS total_msg
@@ -209,7 +213,7 @@ class admin_controller implements admin_interface
 		$this->db->sql_freeresult($result);
 
 		$sort_by_text = array('u' => $this->language->lang('SORT_USERNAME'), 't' => $this->language->lang('SORT_TOTAL_MESSAGES'), 'i' => $this->language->lang('SORT_INBOX'), 'n' => $this->language->lang('SORT_NEW'), 'un' => $this->language->lang('SORT_UNREAD'), 'o' => $this->language->lang('SORT_OUTBOX'), 's' => $this->language->lang('SORT_SENT'), 'sv' => $this->language->lang('SORT_SAVED'), 'h' => $this->language->lang('SORT_HOLD'), 'd' => $this->language->lang('SORT_DELETED'), 'm' => $this->language->lang('SORT_MARKED'), 'r' => $this->language->lang('SORT_REPLY'), 'f' => $this->language->lang('SORT_FORWARDED'), 'nb' => $this->language->lang('SORT_NO_BOX'));
-		$limit_days = array();
+		$limit_days = [];
 		$s_sort_key = $s_limit_days = $s_sort_dir = $u_sort_param = '';
 		gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sd, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
 
@@ -226,7 +230,7 @@ class admin_controller implements admin_interface
 
 		$this->pagination->generate_template_pagination($action, 'pagination', 'start', $user_count, $this->config['topics_per_page'], $start);
 
-		$first_characters		= array();
+		$first_characters		= [];
 		$first_characters['']	= $this->language->lang('ALL');
 		for ($i = ord($this->language->lang('START_CHARACTER')); $i	<= ord($this->language->lang('END_CHARACTER')); $i++)
 		{
@@ -247,6 +251,8 @@ class admin_controller implements admin_interface
 
 		$this->template->assign_vars(array(
 			'DOWNLOAD'			=> (array_key_exists('download', $version_data)) ? '<a class="download" href =' . $version_data['download'] . '>' . $this->language->lang('NEW_VERSION_LINK') . '</a>' : '',
+
+			'EXT_IMAGE_PATH' 	=> $this->ext_images_path,
 
 			'HEAD_TITLE'		=> $this->language->lang('ACP_PM_STATISTICS'),
 			'HEAD_DESCRIPTION'	=> $this->language->lang('ACP_PM_STATISTICS_EXPLAIN'),
@@ -280,7 +286,7 @@ class admin_controller implements admin_interface
 	 */
 	protected function character_select($default)
 	{
-		$options	 = array();
+		$options	 = [];
 		$options[''] = $this->language->lang('ALL');
 
 		for ($i = ord($this->language->lang('START_CHARACTER')); $i	<= ord($this->language->lang('END_CHARACTER')); $i++)

@@ -2,8 +2,8 @@
 	"name": "david63/pmstats",
 	"type": "phpbb-extension",
 	"description": "Adds an Admin option to display a list of the number of member's PM's in each box.",
-	"version": "3.1.0-RC1",
-	"time": "2020-01-26",
+	"version": "3.1.0-RC2",
+	"time": "2020-07-19",
 	"keywords": [
 		"phpbb",
 		"extension",
@@ -24,7 +24,7 @@
 	"extra": {
 		"display-name": "[**] PM statistics",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.3.0"
+			"phpbb/phpbb": ">=3.3.0,<4.0.0@dev"
     	},
 		"version-check": {
         	"host": "version.phpbbdev.space",
