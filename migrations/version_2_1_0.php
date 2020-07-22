@@ -17,7 +17,8 @@ class version_2_1_0 extends migration
 	{
 		$update_data = [];
 
-		if ($this->module_check())
+		// need to add custom module under users & groups
+		if (!$this->module_check())
 		{
 			$update_data[] = array('module.add', array('acp', 'ACP_CAT_USERGROUP', 'ACP_USER_UTILS'));
 		}
@@ -38,16 +39,15 @@ class version_2_1_0 extends migration
 	protected function module_check()
 	{
 		$sql = 'SELECT module_id
-				FROM ' . $this->table_prefix . "modules
-    			WHERE module_class = 'acp'
-        			AND module_langname = 'ACP_USER_UTILS'
-        			AND right_id - left_id > 1";
+			FROM ' . $this->table_prefix . "modules
+   			WHERE module_class = 'acp'
+       			AND module_langname = 'ACP_USER_UTILS'";
 
 		$result		= $this->db->sql_query($sql);
 		$module_id	= (int) $this->db->sql_fetchfield('module_id');
 		$this->db->sql_freeresult($result);
 
-		// return true if module is empty, false if has children
-		return (bool) !$module_id;
+		// return true if module exists, false if not
+		return (bool) $module_id;
 	}
 }
