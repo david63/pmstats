@@ -16,6 +16,7 @@
 		<delete dir="${dir}/tests" />
 		<delete dir="${dir}/travis" />
 		<delete dir="${dir}/vendor" />
+		<delete dir="${dir}/node_modules" />
 
 		<delete file="${dir}/.gitignore" />
 		<delete file="${dir}/.gitattributes" />
@@ -25,6 +26,9 @@
 		<delete file="${dir}/composer.phar" />
 		<delete file="${dir}/phpunit.xml.dist" />
 		<delete file="${dir}/README.md" />
+		<delete file="${dir}/package.json" />
+		<delete file="${dir}/package-lock.json" />
+		<delete file="${dir}/gulpfile.js" />
 	</target>
 
 	<!--

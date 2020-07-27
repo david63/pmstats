@@ -15,7 +15,6 @@ use phpbb\request\request;
 use phpbb\template\template;
 use phpbb\pagination;
 use phpbb\user;
-use phpbb\auth\auth;
 use phpbb\language\language;
 use david63\pmstats\core\functions;
 
@@ -42,9 +41,6 @@ class admin_controller implements admin_interface
 	/** @var \phpbb\user */
 	protected $user;
 
-	/** @var \phpbb\auth\auth */
-	protected $auth;
-
 	/** @var \phpbb\language\language */
 	protected $language;
 
@@ -69,7 +65,6 @@ class admin_controller implements admin_interface
 	* @param \phpbb\template\template			$template			Template object
 	* @param \phpbb\pagination					$pagination			Pagination object
 	* @param \phpbb\user						$user				User object
-	* @param \phpbb\auth\auth 					$auth				Auth object
 	* @param \phpbb\language\language			$language			Language object
 	* @param \david63\pmstats\core\functions	$functions			Functions for the extension
 	* @param array								$tables				phpBB db tables
@@ -78,7 +73,7 @@ class admin_controller implements admin_interface
 	* @return \david63\emaillist\controller\admin_controller
 	* @access public
 	*/
-	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, auth $auth, language $language, functions $functions, $tables, $ext_images_path)
+	public function __construct(config $config, driver_interface $db, request $request, template $template, pagination $pagination, user $user, language $language, functions $functions, $tables, $ext_images_path)
 	{
 		$this->config			= $config;
 		$this->db  				= $db;
@@ -86,7 +81,6 @@ class admin_controller implements admin_interface
 		$this->template			= $template;
 		$this->pagination		= $pagination;
 		$this->user				= $user;
-		$this->auth				= $auth;
 		$this->language			= $language;
 		$this->functions		= $functions;
 		$this->tables			= $tables;
@@ -101,14 +95,14 @@ class admin_controller implements admin_interface
 	*/
 	public function display_output()
 	{
-		// Check that the user has permission to access here
-		if (!$this->auth->acl_get('a_comms_pm_stats'))
-		{
-			trigger_error('NOT_AUTHORISED', E_USER_WARNING);
-		}
-
 		// Add the language files
 		$this->language->add_lang(array('acp_pmstats', 'acp_common'), $this->functions->get_ext_namespace());
+
+		// Are the PHP and phpBB versions valid for this extension?
+		$valid = $this->functions->ext_requirements();
+
+		$php_valid 		= $valid[0] ? true : false;
+		$phpbb_valid	= $valid[1] ? true : false;
 
 		// Get message count
 		$sql = 'SELECT COUNT(msg_id) AS total_msg
@@ -226,7 +220,7 @@ class admin_controller implements admin_interface
 		$user_count = (int) $this->db->sql_fetchfield('total_users');
 		$this->db->sql_freeresult($result);
 
-		$action = $this->u_action . '&amp;sk=' . $sort_key . '&amp;sd=' . $sd;
+		$action = $this->u_action . '&amp;sk=' . $sort_key . '&amp;sd=' . $sd . '&amp;fc=' . $fc;
 
 		$this->pagination->generate_template_pagination($action, 'pagination', 'start', $user_count, $this->config['topics_per_page'], $start);
 
@@ -258,6 +252,9 @@ class admin_controller implements admin_interface
 			'HEAD_DESCRIPTION'	=> $this->language->lang('ACP_PM_STATISTICS_EXPLAIN'),
 
 			'NAMESPACE'			=> $this->functions->get_ext_namespace('twig'),
+
+			'PHP_VALID'			=> $php_valid,
+			'PHPBB_VALID'		=> $phpbb_valid,
 
 			'S_BACK'			=> $back,
 			'S_VERSION_CHECK'	=> (array_key_exists('current', $version_data)) ? $version_data['current'] : false,

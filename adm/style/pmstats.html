@@ -1,5 +1,7 @@
 {% include '@' ~ NAMESPACE ~ '/head_panel.html' %}
 
+{% if PHP_VALID and PHPBB_VALID %}
+
 <form id="list" method="post" action="{{ U_ACTION }}">
 
 	<div class="head-panel">
@@ -76,3 +78,5 @@
 </form>
 
 {% include '@' ~ NAMESPACE ~ '/donate.html' %}
+
+{% endif %}

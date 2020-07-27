@@ -1,0 +1,8 @@
+Tags/
+Branches/
+Diffs/
+Backup/
+
+/node_modules/
+/build/
+/vendor/

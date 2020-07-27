@@ -17,7 +17,7 @@ class pmstats_info
 			'filename'	=> '\david63\pmstats\acp\pmstats_module',
 			'title'		=> 'ACP_PM_STATISTICS',
 			'modes'		=> array(
-				'main'		=> array('title' => 'ACP_PM_STATISTICS', 'auth' => 'ext_david63/pmstats && acl_a_comms_pm_stats', 'cat' => array('ACP_CAT_USERS')),
+				'main'		=> array('title' => 'ACP_PM_STATISTICS', 'auth' => 'ext_david63/pmstats && acl_a_user', 'cat' => array('ACP_CAT_USERS')),
 			),
 		);
 	}

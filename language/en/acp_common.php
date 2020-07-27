@@ -47,10 +47,13 @@ $lang = array_merge($lang, array(
 	'NEW_VERSION'				=> 'New Version - %s',
 	'NEW_VERSION_EXPLAIN'		=> 'Version %1$s of this extension is now available for download.<br>%2$s',
 	'NEW_VERSION_LINK'			=> 'Download here',
+	'NO_JS'						=> 'You appear to have javascript disabled.<br>Please <a href="https://enablejavascript.co/">enable</a> it in your browser to be able to take advantage of all the features on this page.',
 	'NO_VERSION_EXPLAIN'		=> 'Version update information is not available.',
 
 	'PAYPAL_BUTTON'				=> 'Donate with PayPal button',
 	'PAYPAL_TITLE'				=> 'PayPal - The safer, easier way to pay online!',
+	'PHP_NOT_VALID'				=> 'Your version of PHP is not compatible with this extension.',
+	'PHPBB_NOT_VALID'			=> 'Your version of phpBB is not compatible with this extension.',
 
 	'VERSION'					=> 'Version',
 ));
