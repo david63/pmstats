@@ -31,7 +31,7 @@ class add_cat extends migration
 
 		$result		= $this->db->sql_query($sql);
 		$module_id	= (int) $this->db->sql_fetchfield('module_id');
-		
+
 		$this->db->sql_freeresult($result);
 
 		// return true if module is empty, false if has children
